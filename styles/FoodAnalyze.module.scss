@@ -1,0 +1,195 @@
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 24px;
+  text-align: center;
+  font-family: 'Pretendard', sans-serif;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+}
+
+.uploadBox {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  .fileInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; 
+    cursor: pointer;
+  }
+
+  .icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+}
+
+.fileInput {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.analyzeButton {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+}
+
+.resultCard {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #ebf8ff;
+  border-radius: 12px;
+  border-left: 5px solid #4a90e2;
+  animation: slideUp 0.3s ease-out;
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2c5282;
+  }
+
+  .foodName {
+    font-weight: 800;
+    color: #2b6cb0;
+  }
+}
+
+.resultContainer {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: bold;
+  }
+}
+
+.foodInput {
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #ff6b6b; 
+  }
+}
+
+.recipeButton {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.foodInput {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  background-color: #f5f5f5; 
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.activeInput {
+  background-color: #fff;
+  border-color: #ff6b6b;
+  outline: none;
+}
+
+.editBtn, .saveBtn {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.saveBtn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  
+  &:hover {
+    background: #45a049;
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

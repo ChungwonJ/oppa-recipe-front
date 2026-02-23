@@ -1,0 +1,100 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    
+    .backBtn { background: none; border: none; cursor: pointer; color: #666; }
+    .title { font-size: 1.8rem; margin: 0; }
+  }
+}
+
+.videoSection {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  text-align: center;
+
+  .youtubeBtn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #ff0000;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+}
+
+.ingredients {
+  margin-bottom: 40px;
+  ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  li {
+    padding: 10px;
+    background: #fff5f5;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.steps {
+  .recipeText p {
+    margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 3px solid #eee;
+  }
+}
+
+.recipeList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.stepNumber {
+  background: #ff6b6b; 
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  flex-shrink: 0; 
+}
+
+.stepText {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
