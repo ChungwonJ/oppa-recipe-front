@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://oppa-recipe-env.eba-g2dvjrvz.ap-northeast-2.elasticbeanstalk.com', 
+  baseURL: process.env.NEXT_PUBLIC_API_URL, 
   timeout: 10000,
 });
 
