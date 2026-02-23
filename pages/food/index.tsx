@@ -14,16 +14,74 @@ export default function FoodAnalyzePage() {
   const [isAnalyzed, setIsAnalyzed] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  // --- 이미지 리사이징 로직 시작 ---
+  const handleResize = (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // 최대 해상도를 1024px로 제한 (모바일 최적화)
+          const MAX_SIZE = 1024;
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+
+          // JPEG 형식, 0.7 품질로 압축
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const resizedFile = new File([blob], file.name, {
+                type: 'image/jpeg',
+                lastModified: Date.now(),
+              });
+              resolve(resizedFile);
+            }
+          }, 'image/jpeg', 0.7);
+        };
+      };
+    });
+  };
+  // --- 이미지 리사이징 로직 끝 ---
+
+  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      setPreviewUrl(URL.createObjectURL(file));
+      setIsLoading(true); // 리사이징 과정 중 로딩 표시
+      try {
+        const resizedFile = await handleResize(file);
+        setImageFile(resizedFile);
+        
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        setPreviewUrl(URL.createObjectURL(resizedFile));
 
-      setFoodName('');
-      setIsAnalyzed(false);
-      setIsEditable(false);
+        setFoodName('');
+        setIsAnalyzed(false);
+        setIsEditable(false);
+      } catch (err) {
+        console.error("이미지 처리 중 오류 발생:", err);
+        alert("이미지를 처리할 수 없습니다.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -38,7 +96,6 @@ export default function FoodAnalyzePage() {
       setIsEditable(false);
     } catch (err: any) {
       alert(err.message);
-
       setFoodName('');
       setIsAnalyzed(false);
     } finally {
@@ -83,7 +140,7 @@ export default function FoodAnalyzePage() {
           <img src={previewUrl} alt="Preview" className={styles.previewImage} />
         ) : (
           <div className={styles.placeholder}>
-            <p>사진촬영</p>
+            <p>{isLoading ? '이미지 최적화 중...' : '사진촬영'}</p>
           </div>
         )}
 
@@ -92,6 +149,7 @@ export default function FoodAnalyzePage() {
           accept="image/*"
           className={styles.fileInput}
           onChange={onFileChange}
+          disabled={isLoading}
         />
       </div>
 
@@ -100,7 +158,7 @@ export default function FoodAnalyzePage() {
         onClick={handleAnalyze}
         disabled={isLoading || !imageFile}
       >
-        {isLoading ? 'AI가 분석 중...' : '분석 시작하기'}
+        {isLoading ? '처리 중...' : '분석 시작하기'}
       </button>
 
       {isAnalyzed && (
