@@ -14,7 +14,7 @@ export default function Layout({
   const router = useRouter();
 
   const handleLogin = () => {
-    const NAVER_LOGIN_API = `api.${process.env.NEXT_PUBLIC_API_URL}/api/login/naver`;
+    const NAVER_LOGIN_API = `${process.env.NEXT_PUBLIC_API_URL}/api/login/naver`;
     window.location.href = NAVER_LOGIN_API;
   };
 
