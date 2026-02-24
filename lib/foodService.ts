@@ -1,5 +1,5 @@
 import api from '@/lib/axios';
-import { BackendResponse, RecipeData } from '@/types/common';
+import { BackendResponse, RecipeData } from '@/types/components/common';
 
 export const foodService = {
   analyzeFood: async (file: File): Promise<string> => {

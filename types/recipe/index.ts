@@ -1,4 +1,4 @@
-import { RecipeData } from "../common";
+import { RecipeData } from "../components/common";
 
 export interface RecipeVideoProps {
   foodName: string;

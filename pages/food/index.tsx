@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, useRef } from 'react';
-import Head from 'next/head';
 import { foodService } from '@/lib/foodService';
 import styles from '@/styles/FoodAnalyze.module.scss';
 import { useRouter } from 'next/router';
@@ -94,8 +93,6 @@ export default function FoodAnalyzePage() {
 
   return (
     <div className={styles.container}>
-      <Head><title>음식 분석 | 오빠레시피</title></Head>
-
       <ImageUpload
         previewUrl={previewUrl}
         isLoading={isLoading}
@@ -128,3 +125,6 @@ export default function FoodAnalyzePage() {
     </div>
   );
 }
+
+FoodAnalyzePage.title = "오빠의레시피";
+FoodAnalyzePage.showBackButton = false;

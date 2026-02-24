@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { RecipeData } from '@/types/common';
+import { RecipeData } from '@/types/components/common';
 import styles from '@/styles/Recipe.module.scss';
 import BackButton from '@/components/common/BackButton';
 import RecipeVideo from '@/components/recipe/RecipeVideo';
@@ -30,11 +30,6 @@ export default function RecipePage() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <BackButton />
-        <h1 className={styles.title}>{recipe.foodName} 레시피</h1>
-      </header>
-
       <RecipeVideo
         foodName={recipe.foodName}
         shortsUrl={recipe.shortsUrl}
@@ -47,3 +42,6 @@ export default function RecipePage() {
     </div>
   );
 }
+
+RecipePage.title = "레시피 상세";
+RecipePage.showBackButton = true;

@@ -1,9 +1,7 @@
 .container {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 24px;
   text-align: center;
-  font-family: 'Pretendard', sans-serif;
+  max-width: 500px;
+  width: 100%;
 
   .title {
     font-size: 1.5rem;
@@ -32,7 +30,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0; 
+    opacity: 0;
     cursor: pointer;
   }
 
@@ -97,7 +95,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  
+
   label {
     font-size: 0.9rem;
     color: #666;
@@ -116,7 +114,7 @@
 
   &:focus {
     outline: none;
-    border-color: #ff6b6b; 
+    border-color: #ff6b6b;
   }
 }
 
@@ -148,7 +146,7 @@
   padding: 12px;
   border: 2px solid #eee;
   border-radius: 8px;
-  background-color: #f5f5f5; 
+  background-color: #f5f5f5;
   color: #333;
   font-size: 1.1rem;
   font-weight: bold;
@@ -165,7 +163,8 @@
   outline: none;
 }
 
-.editBtn, .saveBtn {
+.editBtn,
+.saveBtn {
   padding: 10px 15px;
   border-radius: 8px;
   border: 1px solid #ddd;
@@ -183,7 +182,7 @@
   background: #4caf50;
   color: white;
   border: none;
-  
+
   &:hover {
     background: #45a049;
   }
@@ -196,6 +195,13 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
