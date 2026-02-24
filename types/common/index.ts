@@ -21,3 +21,8 @@ export interface ErrorResponse {
   status: number;
   message: string;
 }
+
+export interface BackButtonProps {
+  label?: string;
+  className?: string; 
+}
