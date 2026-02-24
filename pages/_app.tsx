@@ -16,10 +16,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
     if (accessToken) {
       localStorage.setItem('accessToken', accessToken as string);
-      
+      setIsLoggedIn(true);
       router.replace('/', undefined, { shallow: true });
-
-      console.log('로그인 성공! 토큰 저장 완료');
+      return;
+    }
+    const savedToken = localStorage.getItem('accessToken');
+    if (savedToken) {
+      setIsLoggedIn(true);
     }
   }, [router.query]);
 
