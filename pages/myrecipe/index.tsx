@@ -21,7 +21,7 @@ export default function MyRecipesPage() {
           <div 
             key={recipe.id} 
             className={styles.recipeItem}
-            onClick={() => router.push(`/myrecipes/${recipe.id}`)}
+            onClick={() => router.push(`/myrecipe/${recipe.id}`)}
           >
             <span className={styles.recipeId}>{recipe.id}</span>
             <span className={styles.recipeName}>{recipe.foodName}</span>
