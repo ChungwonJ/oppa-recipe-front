@@ -57,7 +57,7 @@ export default function MyPage() {
       <section className={styles.section}>
         <h3><Bookmark size={20} color="#ff6b00" /> 레시피</h3>
         <div className={styles.menuList}>
-          <div className={styles.menuItem} onClick={() => router.push('/my-recipes')}>
+          <div className={styles.menuItem} onClick={() => router.push('/myrecipe')}>
             <span>저장된 레시피 확인</span>
             <ChevronRight size={18} color="#ccc" />
           </div>
