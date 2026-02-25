@@ -1,3 +1,5 @@
+import { InternalAxiosRequestConfig } from "axios";
+
 export interface BackendResponse<T> {
   data: T;
   status?: number;
@@ -25,4 +27,8 @@ export interface ErrorResponse {
 export interface BackButtonProps {
   label?: string;
   className?: string; 
+}
+
+export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
 }

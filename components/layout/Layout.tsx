@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 export default function Layout({
   children,
-  title = "오빠의레시피",
+  title = "오빠레시피",
   showBackButton = true,
   isLoggedIn = false
 }: LayoutProps) {
@@ -29,7 +29,7 @@ export default function Layout({
         <h1 className={styles.pageTitle}>{title}</h1>
         <div className={styles.rightSection}>
           {isLoggedIn ? (
-            <button className={styles.userIcon} onClick={() => alert('마이페이지 이동')}>
+            <button className={styles.userIcon} onClick={() => router.push('/mypage')}>
               👤
             </button>
           ) : (

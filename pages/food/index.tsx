@@ -126,5 +126,5 @@ export default function FoodAnalyzePage() {
   );
 }
 
-FoodAnalyzePage.title = "오빠의레시피";
+FoodAnalyzePage.title = "오빠레시피";
 FoodAnalyzePage.showBackButton = false;
