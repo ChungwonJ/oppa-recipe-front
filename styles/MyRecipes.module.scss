@@ -48,3 +48,28 @@
   align-items: center;
   height: 200px;
 }
+
+.deleteSection {
+  margin-top: 50px;
+  padding: 0 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.deleteButton {
+  width: 100%;
+  max-width: 400px;
+  height: 52px;
+  background-color: #ff4d4f; 
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

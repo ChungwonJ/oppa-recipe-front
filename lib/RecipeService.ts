@@ -16,5 +16,9 @@ export const recipeService = {
   getRecipeDetail: async (id: string): Promise<RecipeResponse> => {
     const { data } = await api.get<BackendResponse<RecipeResponse>>(`/api/recipes/${id}`);
     return data.data;
+  },
+
+  deleteRecipe: async (id: string): Promise<void> => { 
+    await api.delete(`/api/recipes/${id}`);
   }
 };

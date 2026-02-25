@@ -23,15 +23,28 @@ export default function MyRecipeDetailPage() {
     }
   }, [id, router]);
 
+  const handleDelete = async () => {
+    if (!window.confirm("이 레시피를 삭제할까요? 지우면 복구 못 합니다.")) return;
+
+    try {
+      await recipeService.deleteRecipe(id as string);
+      alert("삭제되었습니다.");
+      router.push('/myrecipe');
+    } catch (error) {
+      console.error(error);
+      alert("삭제 실패했습니다. 권한이 없거나 서버 에러입니다.");
+    }
+  };
+
   if (!recipe) return <div className={styles.loading}>불러오는 중...</div>;
 
-const ingredientArray = recipe.ingredients.map(ing => {
+  const ingredientArray = recipe.ingredients.map(ing => {
     const displayAmount = ing.fullInfo ? ing.fullInfo.replace(ing.name, '').trim() : '';
 
     return {
-      name: ing.name,           
-      amount: displayAmount,    
-      fullInfo: displayAmount 
+      name: ing.name,
+      amount: displayAmount,
+      fullInfo: displayAmount
     };
   });
 
@@ -42,6 +55,12 @@ const ingredientArray = recipe.ingredients.map(ing => {
         <IngredientList ingredients={ingredientArray} />
         <RecipeSteps recipeText={recipe.recipeContent} />
       </main>
+
+      <div className={styles.deleteSection}>
+          <button onClick={handleDelete} className={styles.deleteButton}>
+            레시피 삭제
+          </button>
+        </div>
     </div>
   );
 }
