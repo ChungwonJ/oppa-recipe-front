@@ -3,25 +3,43 @@ import { useRouter } from 'next/navigation';
 import styles from '@/styles/MyPage.module.scss';
 import { Bookmark, Settings, LogOut, UserMinus, ChevronRight } from 'lucide-react';
 import { userService } from '@/lib/userService';
-import { UserInfo } from '@/types/user';
+import { CustomJwtPayload, UserInfo } from '@/types/user';
+import { jwtDecode } from 'jwt-decode';
 
 export default function MyPage() {
   const router = useRouter();
   const [user, setUser] = useState<UserInfo | null>(null);
 
+  // 토큰에서 정보를 뽑아오는 함수
+  const getSubFromToken = (): string | null => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<CustomJwtPayload>(token);
+      return decoded.sub; // 네이버 고유 식별자 반환
+    } catch (error) {
+      console.error("토큰 디코딩 실패:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      router.push('/login');
+    const naverSubId = getSubFromToken();
+    
+    if (!naverSubId) {
+      // 토큰이 없거나 유효하지 않으면 로그인 페이지(혹은 홈)로 리다이렉트
+      router.push('/'); 
       return;
     }
 
     const fetchUser = async () => {
       try {
-        const data = await userService.getUserInfo(userId);
+        const data = await userService.getUserInfo(naverSubId);
         setUser(data);
       } catch (error) {
         console.error("유저 정보 로드 실패", error);
+        // 정보를 못 가져오면 로그인이 만료된 것일 수 있으니 처리 로직 추가 가능
       }
     };
     fetchUser();
@@ -29,23 +47,22 @@ export default function MyPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
-    router.push('/login');
+    // 필요한 경우 세션스토리지 등 다른 저장소도 비워줘
+    router.push('/');
   };
 
   const handleDeleteAccount = async () => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    const naverSubId = getSubFromToken();
+    if (!naverSubId) return;
 
     if (confirm("정말로 탈퇴하시겠습니까? 모든 데이터가 삭제됩니다.")) {
       try {
-        await userService.deleteUser(userId);
+        await userService.deleteUser(naverSubId);
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('userId');
         alert("회원 탈퇴가 완료되었습니다.");
         router.push('/');
       } catch (error: any) {
-        alert(error.message || "탈퇴 처리 중 오류가 발생했습니다.");
+        alert("탈퇴 처리 중 오류가 발생했습니다.");
       }
     }
   };
@@ -53,14 +70,15 @@ export default function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <h2>{user ? `${user.nickname}님` : '불러오는 중...'}</h2>
+        {/* 토큰에 name이 있으니 로딩 중엔 토큰의 name을 미리 보여줘도 좋아 */}
+        <h2>{user ? `${user.nickname}님` : '사용자 정보를 불러오는 중...'}</h2>
       </div>
 
       <section className={styles.section}>
-        <h3><Bookmark size={20} color="#ff6b00" />레시피</h3>
+        <h3><Bookmark size={20} color="#ff6b00" /> 레시피</h3>
         <div className={styles.menuList}>
           <div className={styles.menuItem} onClick={() => router.push('/my-recipes')}>
-            <span>레시피 확인</span>
+            <span>저장된 레시피 확인</span>
             <ChevronRight size={18} color="#ccc" />
           </div>
         </div>
@@ -71,10 +89,6 @@ export default function MyPage() {
         <div className={styles.menuList}>
           <div className={styles.menuItem} onClick={() => router.push('/my-page/edit')}>
             <span>개인정보 수정</span>
-            <ChevronRight size={18} color="#ccc" />
-          </div>
-          <div className={styles.menuItem}>
-            <span>비밀번호 변경</span>
             <ChevronRight size={18} color="#ccc" />
           </div>
         </div>
