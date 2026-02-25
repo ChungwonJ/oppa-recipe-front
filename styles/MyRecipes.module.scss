@@ -1,5 +1,5 @@
 .container {
-  padding: 20px;
+  width: 100%;
 }
 
 .recipeList {
@@ -9,14 +9,15 @@
 }
 
 .recipeItem {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  justify-items: center;
   align-items: center;
-  padding: 15px;
   border-bottom: 1px solid #eee;
+  padding: 15px;
   cursor: pointer;
 
   .recipeId {
-    width: 40px;
     color: #ff6b00;
     font-weight: bold;
   }
