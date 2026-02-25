@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import styles from '@/styles/MyRecipes.module.scss';
 import { recipeService } from '@/lib/RecipeService';
 import { RecipeResponse } from '@/types/recipe';
+import { BackendResponse } from '@/types/components/common';
 
 export default function MyRecipesPage() {
   const [recipes, setRecipes] = useState<RecipeResponse[]>([]);
@@ -10,16 +11,19 @@ export default function MyRecipesPage() {
   const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
 
-  useEffect(() => {
-    recipeService.getMyRecipes(currentPage, 10)
-      .then((res) => {
-        setRecipes(res.data); 
-        if (res.pageInfo) {
-          setTotalPages(res.pageInfo.totalPage);
-        }
-      })
-      .catch(() => alert("목록을 불러오는데 실패했습니다."));
-  }, [currentPage]); 
+useEffect(() => {
+  recipeService.getMyRecipes(currentPage, 10)
+    .then((res: BackendResponse<RecipeResponse[]>) => { 
+      setRecipes(res.data); 
+      if (res.pageInfo) {
+        setTotalPages(res.pageInfo.totalPage);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("목록 로딩 실패");
+    });
+}, [currentPage]);
 
   return (
     <div className={styles.container}>
