@@ -3,40 +3,30 @@ import { useRouter } from 'next/navigation';
 import styles from '@/styles/MyPage.module.scss';
 import { Bookmark, Settings, LogOut, UserMinus, ChevronRight } from 'lucide-react';
 import { userService } from '@/lib/userService';
-import { CustomJwtPayload, UserInfo } from '@/types/user';
-import { jwtDecode } from 'jwt-decode';
+import { UserInfo } from '@/types/user';
 
 export default function MyPage() {
   const router = useRouter();
   const [user, setUser] = useState<UserInfo | null>(null);
 
-  const getSubFromToken = (): string | null => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) return null;
-
-    try {
-      const decoded = jwtDecode<CustomJwtPayload>(token);
-      return decoded.sub; 
-    } catch (error) {
-      console.error("토큰 디코딩 실패:", error);
-      return null;
-    }
+  const getUserIdFromStorage = (): string | null => {
+    return localStorage.getItem('userId');
   };
 
   useEffect(() => {
-    const naverSubId = getSubFromToken();
+    const userId = getUserIdFromStorage();
     
-    if (!naverSubId) {
+    if (!userId) {
       router.push('/'); 
       return;
     }
 
     const fetchUser = async () => {
       try {
-        const data = await userService.getUserInfo(naverSubId);
+        const data = await userService.getUserInfo(userId);
         setUser(data);
       } catch (error) {
-        console.error("유저 정보 로드 실패", error);
+        console.error(error);
       }
     };
     fetchUser();
@@ -44,17 +34,19 @@ export default function MyPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
     router.push('/');
   };
 
   const handleDeleteAccount = async () => {
-    const naverSubId = getSubFromToken();
-    if (!naverSubId) return;
+    const userId = getUserIdFromStorage();
+    if (!userId) return;
 
     if (confirm("정말로 탈퇴하시겠습니까? 모든 데이터가 삭제됩니다.")) {
       try {
-        await userService.deleteUser(naverSubId);
+        await userService.deleteUser(userId);
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
         alert("회원 탈퇴가 완료되었습니다.");
         router.push('/');
       } catch (error: any) {
@@ -66,7 +58,7 @@ export default function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <h2>{user ? `${user.name}님` : '사용자 정보를 불러오는 중...'}</h2>
+        <h2>{user ? `${user.nickname}님` : '사용자 정보를 불러오는 중...'}</h2>
       </div>
 
       <section className={styles.section}>
