@@ -25,16 +25,11 @@ export default function MyRecipeDetailPage() {
 
   if (!recipe) return <div className={styles.loading}>불러오는 중...</div>;
 
-  const ingredientArray = recipe.ingredients
-    ? recipe.ingredients.split(',').map(item => {
-      const trimmedItem = item.trim();
-      return {
-        name: trimmedItem,
-        fullInfo: trimmedItem
-      };
-    })
-    : [];
-
+  const ingredientArray = recipe.ingredients.map(ing => ({
+    name: ing.name,
+    amount: ing.amount,
+    fullInfo: `${ing.name} ${ing.amount}`.trim()
+  }));
   return (
     <div className={styles.container}>
       <RecipeVideo foodName={recipe.foodName} shortsUrl={recipe.shortsUrl} />

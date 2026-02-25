@@ -13,11 +13,16 @@ export interface RecipeStepsProps {
   recipeText: string;
 }
 
+export interface Ingredient {
+  name: string;
+  amount: string;
+}
+
 export interface RecipeResponse {
   id: number;
   foodName: string;
-  ingredients: string;
-  recipeContent: string; 
+  videoTitle: string;
   shortsUrl: string;
-  videoTitle: string;  
+  recipeContent: string; 
+  ingredients: Ingredient[]; 
 }

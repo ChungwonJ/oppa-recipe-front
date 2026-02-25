@@ -33,17 +33,14 @@ export default function RecipePage() {
 
     setIsSaving(true);
     try {
-      const ingredientsString = Array.isArray(recipe.ingredients)
-        ? recipe.ingredients.map((ing: any) => ing.fullInfo || ing.name).join(', ')
-        : recipe.ingredients;
-
+      const ingredientsJson = JSON.stringify(recipe.ingredients);
 
       const requestData = {
         foodName: recipe.foodName,
         videoTitle: recipe.foodName,
         shortsUrl: recipe.shortsUrl,
         recipeContent: recipe.recipe,
-        ingredients: ingredientsString
+        ingredients: ingredientsJson
       };
 
       console.log("전송 데이터 확인:", requestData);
