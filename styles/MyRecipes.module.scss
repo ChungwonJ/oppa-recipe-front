@@ -11,29 +11,26 @@
 .recipeItem {
   display: flex;
   align-items: center;
-  padding: 16px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 15px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
-  border: 1px solid #eee;
 
-  &:active {
-    background: #f9f9f9;
+  .recipeId {
+    width: 40px;
+    color: #ff6b00;
+    font-weight: bold;
   }
-}
 
-.recipeId {
-  font-weight: bold;
-  color: #ff6b00;
-  margin-right: 16px;
-  min-width: 25px;
-}
+  .recipeName {
+    flex: 1;
+    margin-left: 10px;
+    font-weight: 500;
+  }
 
-.recipeName {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  .recipeDate {
+    color: #888;
+    font-size: 0.9rem;
+  }
 }
 
 .empty {
@@ -60,7 +57,7 @@
   width: 100%;
   max-width: 400px;
   height: 52px;
-  background-color: #ff4d4f; 
+  background-color: #ff4d4f;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -96,7 +93,7 @@
     }
 
     &:not(:disabled):hover {
-      background-color: #ffeb3b; 
+      background-color: #ffeb3b;
     }
   }
 

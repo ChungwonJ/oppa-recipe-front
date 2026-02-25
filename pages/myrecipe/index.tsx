@@ -11,47 +11,58 @@ export default function MyRecipesPage() {
   const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
 
-useEffect(() => {
-  recipeService.getMyRecipes(currentPage, 10)
-    .then((res: BackendResponse<RecipeResponse[]>) => { 
-      setRecipes(res.data); 
-      if (res.pageInfo) {
-        setTotalPages(res.pageInfo.totalPage);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("목록 로딩 실패");
-    });
-}, [currentPage]);
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+  };
+
+  useEffect(() => {
+    recipeService.getMyRecipes(currentPage, 10)
+      .then((res: BackendResponse<RecipeResponse[]>) => {
+        setRecipes(res.data);
+        if (res.pageInfo) {
+          setTotalPages(res.pageInfo.totalPage);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("목록 로딩 실패");
+      });
+  }, [currentPage]);
 
   return (
     <div className={styles.container}>
       <div className={styles.recipeList}>
-        {recipes.map((recipe) => (
-          <div 
-            key={recipe.id} 
-            className={styles.recipeItem}
-            onClick={() => router.push(`/myrecipe/${recipe.id}`)}
-          >
-            <span className={styles.recipeId}>{recipe.id}</span>
-            <span className={styles.recipeName}>{recipe.foodName}</span>
-          </div>
-        ))}
+        {recipes.map((recipe, index) => {
+          const displayId = (currentPage - 1) * 10 + index + 1;
+
+          return (
+            <div
+              key={recipe.id}
+              className={styles.recipeItem}
+              onClick={() => router.push(`/myrecipe/${recipe.id}`)}
+            >
+              <span className={styles.recipeId}>{displayId}</span>
+              <span className={styles.recipeName}>{recipe.foodName}</span>
+              <span className={styles.recipeDate}>{formatDate(recipe.createdAt)}</span>
+            </div>
+          );
+        })}
       </div>
-      
+
       {recipes.length > 0 && (
         <div className={styles.pagination}>
-          <button 
+          <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(prev => prev - 1)}
           >
             이전
           </button>
-          
+
           <span>{currentPage} / {totalPages}</span>
-          
-          <button 
+
+          <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => prev + 1)}
           >

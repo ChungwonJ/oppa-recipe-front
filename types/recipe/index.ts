@@ -25,4 +25,5 @@ export interface RecipeResponse {
   shortsUrl: string;
   recipeContent: string; 
   ingredients: Ingredient[]; 
+  createdAt: string;
 }
