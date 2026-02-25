@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/MyPage.module.scss';
-import { Bookmark, Settings, LogOut, UserMinus, ChevronRight } from 'lucide-react';
+import { Bookmark, LogOut, UserMinus, ChevronRight } from 'lucide-react';
 import { userService } from '@/lib/UserService';
 import { UserInfo } from '@/types/user';
 
@@ -59,16 +59,6 @@ export default function MyPage() {
         <div className={styles.menuList}>
           <div className={styles.menuItem} onClick={() => router.push('/myrecipe')}>
             <span>저장된 레시피 확인</span>
-            <ChevronRight size={18} color="#ccc" />
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h3><Settings size={20} color="#4a90e2" /> 계정 설정</h3>
-        <div className={styles.menuList}>
-          <div className={styles.menuItem} onClick={() => router.push('/mypage/edit')}>
-            <span>개인정보 수정</span>
             <ChevronRight size={18} color="#ccc" />
           </div>
         </div>
