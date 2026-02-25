@@ -35,7 +35,7 @@ export default function Layout({
         <div className={styles.rightSection}>
           {isLoggedIn ? (
             <button className={styles.userIcon} onClick={handleMyPage}>
-              <User size={18} />
+              <User size={24} />
             </button>
           ) : (
             <button className={styles.loginBtn} onClick={handleLogin}>
