@@ -1,9 +1,17 @@
 import { InternalAxiosRequestConfig } from "axios";
 
+export interface PageInfo {
+  pageNum: number;
+  pageSize: number;
+  totalElement: number;
+  totalPage: number;
+}
+
 export interface BackendResponse<T> {
   data: T;
   status?: number;
   message?: string;
+  pageInfo?: PageInfo;
 }
 
 export interface Ingredient {

@@ -8,9 +8,11 @@ export const recipeService = {
     return data.data;
   },
 
-  getMyRecipes: async (): Promise<RecipeResponse[]> => {
-    const { data } = await api.get<BackendResponse<RecipeResponse[]>>('/api/recipes/my');
-    return data.data;
+  getMyRecipes: async (pageNum: number = 1, pageSize: number = 10): Promise<BackendResponse<RecipeResponse[]>> => {
+    const { data } = await api.get<BackendResponse<RecipeResponse[]>>(
+      `/api/recipes/my?pageNum=${pageNum}&pageSize=${pageSize}`
+    );
+    return data;
   },
 
   getRecipeDetail: async (id: string): Promise<RecipeResponse> => {
@@ -18,7 +20,7 @@ export const recipeService = {
     return data.data;
   },
 
-  deleteRecipe: async (id: string): Promise<void> => { 
+  deleteRecipe: async (id: string): Promise<void> => {
     await api.delete(`/api/recipes/${id}`);
   }
 };
