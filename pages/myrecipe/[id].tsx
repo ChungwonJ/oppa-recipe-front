@@ -40,7 +40,7 @@ export default function MyRecipeDetailPage() {
       <RecipeVideo foodName={recipe.foodName} shortsUrl={recipe.shortsUrl} />
       <main className={styles.content}>
         <IngredientList ingredients={ingredientArray} />
-        <RecipeSteps recipeText={recipe.recipe} />
+        <RecipeSteps recipeText={recipe.recipeContent} />
       </main>
     </div>
   );
