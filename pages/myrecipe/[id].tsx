@@ -25,11 +25,15 @@ export default function MyRecipeDetailPage() {
 
   if (!recipe) return <div className={styles.loading}>불러오는 중...</div>;
 
-  const ingredientArray = recipe.ingredients.map(ing => ({
-    name: ing.name,
-    amount: ing.fullInfo || '',
-    fullInfo: ing.fullInfo ? `${ing.fullInfo}`.trim() : ing.name
-  }));
+const ingredientArray = recipe.ingredients.map(ing => {
+    const displayAmount = ing.fullInfo ? ing.fullInfo.replace(ing.name, '').trim() : '';
+
+    return {
+      name: ing.name,           
+      amount: displayAmount,    
+      fullInfo: displayAmount 
+    };
+  });
 
   return (
     <div className={styles.container}>
