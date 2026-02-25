@@ -28,7 +28,7 @@ export default function MyRecipeDetailPage() {
   const ingredientArray = recipe.ingredients.map(ing => ({
     name: ing.name,
     amount: ing.fullInfo || '',
-    fullInfo: ing.fullInfo ? `${ing.name} ${ing.fullInfo}`.trim() : ing.name
+    fullInfo: ing.fullInfo ? `${ing.fullInfo}`.trim() : ing.name
   }));
 
   return (
