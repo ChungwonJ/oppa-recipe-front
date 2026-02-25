@@ -10,14 +10,13 @@ export default function MyPage() {
   const router = useRouter();
   const [user, setUser] = useState<UserInfo | null>(null);
 
-  // 토큰에서 정보를 뽑아오는 함수
   const getSubFromToken = (): string | null => {
     const token = localStorage.getItem('accessToken');
     if (!token) return null;
 
     try {
       const decoded = jwtDecode<CustomJwtPayload>(token);
-      return decoded.sub; // 네이버 고유 식별자 반환
+      return decoded.sub; 
     } catch (error) {
       console.error("토큰 디코딩 실패:", error);
       return null;
@@ -28,7 +27,6 @@ export default function MyPage() {
     const naverSubId = getSubFromToken();
     
     if (!naverSubId) {
-      // 토큰이 없거나 유효하지 않으면 로그인 페이지(혹은 홈)로 리다이렉트
       router.push('/'); 
       return;
     }
@@ -39,7 +37,6 @@ export default function MyPage() {
         setUser(data);
       } catch (error) {
         console.error("유저 정보 로드 실패", error);
-        // 정보를 못 가져오면 로그인이 만료된 것일 수 있으니 처리 로직 추가 가능
       }
     };
     fetchUser();
@@ -47,7 +44,6 @@ export default function MyPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    // 필요한 경우 세션스토리지 등 다른 저장소도 비워줘
     router.push('/');
   };
 
@@ -70,8 +66,7 @@ export default function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        {/* 토큰에 name이 있으니 로딩 중엔 토큰의 name을 미리 보여줘도 좋아 */}
-        <h2>{user ? `${user.nickname}님` : '사용자 정보를 불러오는 중...'}</h2>
+        <h2>{user ? `${user.name}님` : '사용자 정보를 불러오는 중...'}</h2>
       </div>
 
       <section className={styles.section}>
