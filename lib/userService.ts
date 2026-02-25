@@ -3,17 +3,17 @@ import { BackendResponse } from '@/types/components/common';
 import { UserInfo } from '@/types/user';
 
 export const userService = {
-  getUserInfo: async (id: string): Promise<UserInfo> => {
+  getUserInfo: async (id: number): Promise<UserInfo> => {
     const { data } = await api.get<BackendResponse<UserInfo>>(`/api/v1/users/${id}`);
     return data.data;
   },
 
-  updateUser: async (id: string, userData: Partial<UserInfo>): Promise<UserInfo> => {
+  updateUser: async (id: number, userData: Partial<UserInfo>): Promise<UserInfo> => {
     const { data } = await api.post<BackendResponse<UserInfo>>(`/api/v1/users/${id}`, userData);
     return data.data;
   },
 
-  deleteUser: async (id: string): Promise<void> => {
+  deleteUser: async (id: number): Promise<void> => {
     await api.delete(`/api/v1/users/${id}`);
   }
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import styles from '@/styles/MyPage.module.scss';
 import { Bookmark, Settings, LogOut, UserMinus, ChevronRight } from 'lucide-react';
 import { userService } from '@/lib/userService';
@@ -7,50 +7,48 @@ import { UserInfo } from '@/types/user';
 
 export default function MyPage() {
   const router = useRouter();
+  const { id } = router.query;
   const [user, setUser] = useState<UserInfo | null>(null);
 
-  const getUserIdFromStorage = (): string | null => {
-    return localStorage.getItem('userId');
-  };
-
   useEffect(() => {
-    const userId = getUserIdFromStorage();
-    
-    if (!userId) {
-      router.push('/'); 
-      return;
-    }
+    if (!router.isReady || !id) return;
 
     const fetchUser = async () => {
       try {
-        const data = await userService.getUserInfo(userId);
+        const userIdNum = parseInt(String(id), 10);
+        
+        if (isNaN(userIdNum)) {
+          console.error("Invalid User ID");
+          return;
+        }
+
+        const data = await userService.getUserInfo(userIdNum);
         setUser(data);
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchUser();
-  }, [router]);
+  }, [id, router.isReady]);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
     router.push('/');
   };
 
   const handleDeleteAccount = async () => {
-    const userId = getUserIdFromStorage();
-    if (!userId) return;
+    if (!id) return;
 
-    if (confirm("정말로 탈퇴하시겠습니까? 모든 데이터가 삭제됩니다.")) {
+    if (confirm("정말로 탈퇴하시겠습니까?")) {
       try {
-        await userService.deleteUser(userId);
+        const userIdNum = parseInt(String(id), 10);
+        await userService.deleteUser(userIdNum);
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('userId');
-        alert("회원 탈퇴가 완료되었습니다.");
+        alert("탈퇴 완료");
         router.push('/');
-      } catch (error: any) {
-        alert("탈퇴 처리 중 오류가 발생했습니다.");
+      } catch (error) {
+        alert("탈퇴 실패");
       }
     }
   };
@@ -58,7 +56,7 @@ export default function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <h2>{user ? `${user.nickname}님` : '사용자 정보를 불러오는 중...'}</h2>
+        <h2>{user ? `${user.name}님` : '사용자 정보를 불러오는 중...'}</h2>
       </div>
 
       <section className={styles.section}>
