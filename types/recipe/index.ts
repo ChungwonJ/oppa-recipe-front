@@ -17,6 +17,7 @@ export interface RecipeResponse {
   id: number;
   foodName: string;
   ingredients: string;
-  recipe: string;
+  recipeContent: string; 
   shortsUrl: string;
+  videoTitle: string;  
 }
