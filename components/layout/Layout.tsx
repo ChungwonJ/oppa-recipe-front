@@ -3,6 +3,7 @@ import BackButton from '@/components/common/BackButton';
 import styles from '@/styles/components/Layout.module.scss';
 import { LayoutProps } from '@/types/components/layout';
 import { useRouter } from 'next/router';
+import { User } from 'lucide-react';
 
 export default function Layout({
   children,
@@ -34,7 +35,7 @@ export default function Layout({
         <div className={styles.rightSection}>
           {isLoggedIn ? (
             <button className={styles.userIcon} onClick={handleMyPage}>
-              👤
+              <User size={18} />
             </button>
           ) : (
             <button className={styles.loginBtn} onClick={handleLogin}>

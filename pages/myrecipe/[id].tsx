@@ -27,9 +27,10 @@ export default function MyRecipeDetailPage() {
 
   const ingredientArray = recipe.ingredients.map(ing => ({
     name: ing.name,
-    amount: ing.amount,
-    fullInfo: `${ing.name} ${ing.amount}`.trim()
+    amount: ing.fullInfo || '',
+    fullInfo: ing.fullInfo ? `${ing.name} ${ing.fullInfo}`.trim() : ing.name
   }));
+
   return (
     <div className={styles.container}>
       <RecipeVideo foodName={recipe.foodName} shortsUrl={recipe.shortsUrl} />

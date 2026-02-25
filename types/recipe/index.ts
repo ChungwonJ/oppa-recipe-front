@@ -15,7 +15,7 @@ export interface RecipeStepsProps {
 
 export interface Ingredient {
   name: string;
-  amount: string;
+  fullInfo: string;
 }
 
 export interface RecipeResponse {
