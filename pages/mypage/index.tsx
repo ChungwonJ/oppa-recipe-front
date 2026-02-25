@@ -18,7 +18,7 @@ export default function Layout({
     window.location.href = NAVER_LOGIN_API;
   };
 
-  const handleMyPage = () => {
+  const handleGoMyPage = () => {
     router.push('/mypage');
   };
 
@@ -33,7 +33,7 @@ export default function Layout({
         <h1 className={styles.pageTitle}>{title}</h1>
         <div className={styles.rightSection}>
           {isLoggedIn ? (
-            <button className={styles.userIcon} onClick={handleMyPage}>
+            <button className={styles.userIcon} onClick={handleGoMyPage}>
               👤
             </button>
           ) : (
