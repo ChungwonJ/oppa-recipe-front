@@ -30,20 +30,31 @@ export default function RecipePage() {
 
   const handleSave = async () => {
     if (!recipe) return;
-    
+
     setIsSaving(true);
     try {
-      await recipeService.saveRecipe({
+      const ingredientsString = Array.isArray(recipe.ingredients)
+        ? recipe.ingredients.map((ing: any) => ing.fullInfo || ing.name).join(', ')
+        : recipe.ingredients;
+
+
+      const requestData = {
         foodName: recipe.foodName,
-        ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients,
-        recipe: recipe.recipe,
-        shortsUrl: recipe.shortsUrl
-      });
+        videoTitle: recipe.foodName,
+        shortsUrl: recipe.shortsUrl,
+        recipeContent: recipe.recipe,
+        ingredients: ingredientsString
+      };
+
+      console.log("전송 데이터 확인:", requestData);
+
+      await recipeService.saveRecipe(requestData);
+
       alert("레시피가 저장되었습니다!");
-      router.push('/my-recipes');
+      router.push('/myrecipe');
     } catch (error) {
-      console.error(error);
-      alert("로그인이 필요하거나 저장 중 오류가 발생했습니다.");
+      console.error("저장 실패 원인:", error);
+      alert("저장 중 오류가 발생했습니다. 로그를 확인해주세요.");
     } finally {
       setIsSaving(false);
     }
@@ -62,8 +73,8 @@ export default function RecipePage() {
         <IngredientList ingredients={recipe.ingredients} />
         <RecipeSteps recipeText={recipe.recipe} />
 
-        <button 
-          className={styles.saveButton} 
+        <button
+          className={styles.saveButton}
           onClick={handleSave}
           disabled={isSaving}
         >
