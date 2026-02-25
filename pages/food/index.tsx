@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useRef } from 'react';
-import { foodService } from '@/lib/foodService';
+import { foodService } from '@/lib/FoodService';
 import styles from '@/styles/FoodAnalyze.module.scss';
 import { useRouter } from 'next/router';
 import ImageUpload from '@/components/food/ImageUpload';

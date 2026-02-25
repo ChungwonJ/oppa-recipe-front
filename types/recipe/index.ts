@@ -12,3 +12,11 @@ export interface IngredientListProps {
 export interface RecipeStepsProps {
   recipeText: string;
 }
+
+export interface RecipeResponse {
+  id: number;
+  foodName: string;
+  ingredients: string;
+  recipe: string;
+  shortsUrl: string;
+}

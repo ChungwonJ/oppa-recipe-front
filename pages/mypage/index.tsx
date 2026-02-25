@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/MyPage.module.scss';
 import { Bookmark, Settings, LogOut, UserMinus, ChevronRight } from 'lucide-react';
-import { userService } from '@/lib/userService';
+import { userService } from '@/lib/UserService';
 import { UserInfo } from '@/types/user';
 
 export default function MyPage() {

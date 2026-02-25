@@ -2,14 +2,16 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RecipeData } from '@/types/components/common';
 import styles from '@/styles/Recipe.module.scss';
-import BackButton from '@/components/common/BackButton';
 import RecipeVideo from '@/components/recipe/RecipeVideo';
 import IngredientList from '@/components/recipe/IngredientList';
 import RecipeSteps from '@/components/recipe/RecipeSteps';
+import { Save } from 'lucide-react';
+import { recipeService } from '@/lib/RecipeService';
 
 export default function RecipePage() {
   const router = useRouter();
   const [recipe, setRecipe] = useState<RecipeData | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (router.query.data) {
@@ -26,6 +28,27 @@ export default function RecipePage() {
     }
   }, [router.query.data]);
 
+  const handleSave = async () => {
+    if (!recipe) return;
+    
+    setIsSaving(true);
+    try {
+      await recipeService.saveRecipe({
+        foodName: recipe.foodName,
+        ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients,
+        recipe: recipe.recipe,
+        shortsUrl: recipe.shortsUrl
+      });
+      alert("레시피가 저장되었습니다!");
+      router.push('/my-recipes');
+    } catch (error) {
+      console.error(error);
+      alert("로그인이 필요하거나 저장 중 오류가 발생했습니다.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   if (!recipe) return <div className={styles.loading}>로딩 중...</div>;
 
   return (
@@ -38,6 +61,15 @@ export default function RecipePage() {
       <main className={styles.content}>
         <IngredientList ingredients={recipe.ingredients} />
         <RecipeSteps recipeText={recipe.recipe} />
+
+        <button 
+          className={styles.saveButton} 
+          onClick={handleSave}
+          disabled={isSaving}
+        >
+          <Save size={20} />
+          {isSaving ? '저장 중...' : '레시피 저장하기'}
+        </button>
       </main>
     </div>
   );
