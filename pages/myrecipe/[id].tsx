@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import styles from '@/styles/RecipePage.module.scss';
+import styles from '@/styles/MyRecipeDetail.module.scss';
 import RecipeVideo from '@/components/recipe/RecipeVideo';
 import IngredientList from '@/components/recipe/IngredientList';
 import RecipeSteps from '@/components/recipe/RecipeSteps';
