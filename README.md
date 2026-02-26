@@ -38,6 +38,7 @@
 <br/>
 
 ##  Project Structure
+```text
 OPPA-RECIPE-FRONT/
 ├── __tests__/      # Jest 테스트 파일
 ├── components/     # 재사용 가능한 UI 컴포넌트
