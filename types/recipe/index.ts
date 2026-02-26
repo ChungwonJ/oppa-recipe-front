@@ -27,3 +27,10 @@ export interface RecipeResponse {
   ingredients: Ingredient[]; 
   createdAt: string;
 }
+
+export interface RecipeItemProps {
+recipe: RecipeResponse;
+  displayId: number;
+  onClick: (id: number) => void; 
+  formatDate: (date?: string) => string;
+}

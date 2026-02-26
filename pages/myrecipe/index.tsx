@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/MyRecipes.module.scss';
 import { recipeService } from '@/lib/RecipeService';
 import { RecipeResponse } from '@/types/recipe';
 import { BackendResponse } from '@/types/components/common';
+import RecipeItem from '@/components/myrecipe/RecipeItem';
 
 export default function MyRecipesPage() {
   const [recipes, setRecipes] = useState<RecipeResponse[]>([]);
@@ -11,11 +12,15 @@ export default function MyRecipesPage() {
   const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
 
-  const formatDate = (dateString?: string) => {
+  const formatDate = useCallback((dateString?: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
-  };
+  }, []);
+
+  const handleItemClick = useCallback((id: number) => {
+    router.push(`/myrecipe/${id}`);
+  }, [router]);
 
   useEffect(() => {
     recipeService.getMyRecipes(currentPage, 10)
@@ -34,21 +39,15 @@ export default function MyRecipesPage() {
   return (
     <div className={styles.container}>
       <div className={styles.recipeList}>
-        {recipes.map((recipe, index) => {
-          const displayId = (currentPage - 1) * 10 + index + 1;
-
-          return (
-            <div
-              key={recipe.id}
-              className={styles.recipeItem}
-              onClick={() => router.push(`/myrecipe/${recipe.id}`)}
-            >
-              <span className={styles.recipeId}>{displayId}</span>
-              <span className={styles.recipeName}>{recipe.foodName}</span>
-              <span className={styles.recipeDate}>{formatDate(recipe.createdAt)}</span>
-            </div>
-          );
-        })}
+        {recipes.map((recipe, index) => (
+          <RecipeItem
+            key={recipe.id}
+            recipe={recipe}
+            displayId={(currentPage - 1) * 10 + index + 1}
+            onClick={handleItemClick}
+            formatDate={formatDate}
+          />
+        ))}
       </div>
 
       {recipes.length > 0 && (
