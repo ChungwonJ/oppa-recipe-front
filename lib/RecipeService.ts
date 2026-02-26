@@ -1,4 +1,4 @@
-import api from '@/lib/axios';
+import api from '@/lib/api';
 import { BackendResponse } from '@/types/components/common';
 import { RecipeResponse } from '@/types/recipe';
 

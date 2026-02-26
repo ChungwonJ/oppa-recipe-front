@@ -24,6 +24,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "jest.config.js"  ],
+, "jest.config.js", "__tests__/api.test.js"  ],
   "exclude": ["node_modules"]
 }

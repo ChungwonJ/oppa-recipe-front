@@ -1,4 +1,4 @@
-import api from '@/lib/axios';
+import api from '@/lib/api';
 import { BackendResponse, RecipeData } from '@/types/components/common';
 
 export const foodService = {
