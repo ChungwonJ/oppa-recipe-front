@@ -11,7 +11,7 @@
 
 <br/>
 
-## 🛠 Tech Stack
+## Tech Stack
 - **Framework**: Next.js (Pages Router)
 - **Language**: TypeScript
 - **Styling**: SCSS / Tailwind CSS
