@@ -101,15 +101,17 @@ export default function FoodAnalyzePage() {
 
       <button
         className={styles.analyzeButton}
-        onClick={handleAnalyze}
         disabled={isLoading || !imageFile}
+        aria-busy={isLoading}
+        type='button'
+        onClick={handleAnalyze}
       >
         {isLoading ? '처리 중...' : '분석 시작하기'}
       </button>
 
       {isAnalyzed && (
         <AnalysisResult
-          ref={inputRef} 
+          ref={inputRef}
           foodName={foodName}
           isEditable={isEditable}
           isLoading={isLoading}

@@ -34,11 +34,19 @@ export default function Layout({
         <h1 className={styles.pageTitle}>{title}</h1>
         <div className={styles.rightSection}>
           {isLoggedIn ? (
-            <button className={styles.userIcon} onClick={handleMyPage}>
+            <button
+              className={styles.userIcon}
+              aria-label="마이페이지로 이동"
+              onClick={handleMyPage}
+            >
               <User size={24} />
             </button>
           ) : (
-            <button className={styles.loginBtn} onClick={handleLogin}>
+            <button
+              className={styles.loginBtn}
+              aria-label="로그인 페이지로 이동"
+              onClick={handleLogin}
+            >
               로그인
             </button>
           )}

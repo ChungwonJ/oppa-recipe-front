@@ -65,11 +65,19 @@ export default function MyPage() {
       </section>
 
       <footer className={styles.dangerZone}>
-        <button className={styles.logout} onClick={handleLogout}>
+        <button
+          className={styles.logout}
+          aria-label="로그아웃"
+          onClick={handleLogout}
+        >
           <LogOut size={18} />
           로그아웃
         </button>
-        <button className={styles.deleteAccount} onClick={handleDeleteAccount}>
+        <button
+          className={styles.deleteAccount}
+          aria-label="회원 탈퇴"
+          onClick={handleDeleteAccount}
+        >
           <UserMinus size={18} />
           회원 탈퇴
         </button>

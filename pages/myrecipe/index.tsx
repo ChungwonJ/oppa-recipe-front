@@ -54,6 +54,7 @@ export default function MyRecipesPage() {
         <div className={styles.pagination}>
           <button
             disabled={currentPage === 1}
+            aria-label="이전 페이지"
             onClick={() => setCurrentPage(prev => prev - 1)}
           >
             이전
@@ -63,6 +64,7 @@ export default function MyRecipesPage() {
 
           <button
             disabled={currentPage === totalPages}
+            aria-label="다음 페이지"
             onClick={() => setCurrentPage(prev => prev + 1)}
           >
             다음

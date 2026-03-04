@@ -5,9 +5,11 @@ export default function BackButton({ label = '뒤로가기', className }: BackBu
   const router = useRouter();
 
   return (
-    <button 
-      onClick={() => router.back()} 
+    <button
       className={`backBtn ${className || ''}`}
+      aria-label={label}
+      type="button"
+      onClick={() => router.back()}
     >
       ← {label}
     </button>

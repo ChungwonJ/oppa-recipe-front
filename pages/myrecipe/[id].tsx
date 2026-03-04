@@ -57,10 +57,14 @@ export default function MyRecipeDetailPage() {
       </main>
 
       <div className={styles.deleteSection}>
-          <button onClick={handleDelete} className={styles.deleteButton}>
-            레시피 삭제
-          </button>
-        </div>
+        <button
+          className={styles.deleteButton}
+          aria-label="레시피 삭제"
+          onClick={handleDelete}
+        >
+          레시피 삭제
+        </button>
+      </div>
     </div>
   );
 }

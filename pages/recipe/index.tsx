@@ -72,8 +72,9 @@ export default function RecipePage() {
 
         <button
           className={styles.saveButton}
-          onClick={handleSave}
           disabled={isSaving}
+          aria-label="레시피 저장하기"
+          onClick={handleSave}
         >
           <Save size={20} />
           {isSaving ? '저장 중...' : '레시피 저장하기'}

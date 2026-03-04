@@ -194,6 +194,10 @@
   object-fit: contain;
 }
 
+.srOnly {
+  display: none;
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;
