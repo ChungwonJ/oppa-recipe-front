@@ -1,9 +1,10 @@
-import { useState, ChangeEvent, useRef } from 'react';
+import { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { foodService } from '@/lib/FoodService';
 import styles from '@/styles/FoodAnalyze.module.scss';
 import { useRouter } from 'next/router';
 import ImageUpload from '@/components/food/ImageUpload';
 import AnalysisResult from '@/components/food/AnalysisResult';
+import { resizeImage } from '@/utils/imageUtils';
 
 export default function FoodAnalyzePage() {
   const router = useRouter();
@@ -15,34 +16,11 @@ export default function FoodAnalyzePage() {
   const [isAnalyzed, setIsAnalyzed] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleResize = (file: File): Promise<File> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_SIZE = 1024;
-          let { width, height } = img;
-
-          if (width > height) {
-            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
-          } else {
-            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          canvas.getContext('2d')?.drawImage(img, 0, 0, width, height);
-          canvas.toBlob((blob) => {
-            if (blob) resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
-          }, 'image/jpeg', 0.7);
-        };
-      };
-    });
-  };
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -50,7 +28,7 @@ export default function FoodAnalyzePage() {
 
     setIsLoading(true);
     try {
-      const resizedFile = await handleResize(file);
+      const resizedFile = await resizeImage(file);
       setImageFile(resizedFile);
       if (previewUrl) URL.revokeObjectURL(previewUrl);
       setPreviewUrl(URL.createObjectURL(resizedFile));
